@@ -1,0 +1,24 @@
+---
+- name: Create database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name=meal_planner state=present
+
+- name: Create database user
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name=vagrant role_attr_flags=CREATEDB state=present
+
+- name: Perform migrations
+  django_manage: app_path=/vagrant/meal_planner command=migrate
+
+- name: Clear existing staticfiles dir
+  file: path=/vagrant/staticfiles state=absent
+
+- name: Symlink static files to staticfiles dir
+  command: python /vagrant/meal_planner/manage.py collectstatic --noinput -l -i sass
+
+- name: Add dummy Production env vars
+  lineinfile: dest=/home/vagrant/.profile line='export DJANGO_SECRET_KEY=foo'
+  lineinfile: dest=/home/vagrant/.profile line='export SENDGRID_USERNAME=foo'
+  lineinfile: dest=/home/vagrant/.profile line='export SENDGRID_PASSWORD=foo'

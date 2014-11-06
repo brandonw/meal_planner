@@ -1,0 +1,11 @@
+- name: Provision default django development VM
+  hosts: all
+  roles:
+    - common
+    - nginx
+    - postgresql
+    - memcached
+    - python
+    - compass
+    - grunt
+    - django

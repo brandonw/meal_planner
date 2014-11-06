@@ -1,0 +1,18 @@
+---
+- name: Install python-software-properties to enable add-apt-repository
+  sudo: yes
+  apt: name=python-software-properties state=present
+
+- name: Add chris-lea node apt repo
+  sudo: yes
+  apt_repository: repo='ppa:chris-lea/node.js' state=present
+
+- name: Install node.js and npm from PPA
+  sudo: yes
+  apt: name=nodejs update_cache=yes state=present
+
+- name: Install necessary node.js packages
+  npm: path=/vagrant state=present
+
+- name: Update PATH
+  lineinfile: dest=/home/vagrant/.profile line='PATH="/vagrant/node_modules/.bin:$PATH"'

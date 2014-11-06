@@ -1,0 +1,10 @@
+---
+- name: Install memcached
+  sudo: yes
+  apt: pkg={{ item }} state=present
+  with_items:
+    - memcached
+    - libmemcached-dev
+    - libmemcached-tools
+  notify:
+    - Restart memcached

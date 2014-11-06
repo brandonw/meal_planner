@@ -1,0 +1,18 @@
+---
+- name: Install nginx
+  sudo: yes
+  apt: name=nginx state=present
+
+- name: Copy nginx configuration to available sites
+  sudo: yes
+  copy: src=test.conf dest=/etc/nginx/sites-available/meal_planner
+
+- name: Enable site
+  sudo: yes
+  file: src=/etc/nginx/sites-available/meal_planner dest=/etc/nginx/sites-enabled/meal_planner state=link
+
+- name: Remove default site
+  sudo: yes
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify:
+    - Restart nginx

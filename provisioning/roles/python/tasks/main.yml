@@ -1,0 +1,17 @@
+---
+- name: Install python and pip
+  sudo: yes
+  apt: pkg={{ item }} state=present
+  with_items:
+    - python
+    - python-pip
+    - python-dev
+    - python-psycopg2
+    - libjpeg-dev
+
+- name: Install necessary python packages
+  sudo: yes
+  pip: requirements=/vagrant/requirements/local.txt
+
+- name: Update PATH
+  lineinfile: dest=/home/vagrant/.profile line='PATH="$HOME/.local/bin:$PATH"'
