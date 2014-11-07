@@ -22,6 +22,7 @@ class Meal(models.Model):
     slug = AutoSlugField(populate_from='name', unique_with='user')
     user = models.ForeignKey('users.User')
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES,
+                                              null=True,
                                               default=NOT_EDIBLE)
 
     url = models.URLField(blank=True)
