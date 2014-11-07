@@ -23,5 +23,11 @@ class Meal(models.Model):
     user = models.ForeignKey('users.User')
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES,
                                               default=NOT_EDIBLE)
+
     url = models.URLField(blank=True)
+    description = models.TextField(blank=True)
+
     tags = TaggableManager()
+
+    def __unicode__(self):
+        return self.name
