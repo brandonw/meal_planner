@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Meals</h2>
+
+<div class="list-group">
+    {% for meal in meals %}
+    <a href="{% url 'meal' meal.slug %}" class="list-group-item">
+        <h4>
+        {{ meal.name }}
+        &nbsp; &nbsp;
+        {% if meal.rating > 0 %}
+        <i class="fa fa-star"></i>
+        {% else %}
+        <i class="fa fa-star-o"></i>
+        {% endif %}
+
+        {% if meal.rating > 1 %}
+        <i class="fa fa-star"></i>
+        {% else %}
+        <i class="fa fa-star-o"></i>
+        {% endif %}
+
+        {% if meal.rating > 2 %}
+        <i class="fa fa-star"></i>
+        {% else %}
+        <i class="fa fa-star-o"></i>
+        {% endif %}
+
+        {% if meal.rating > 3 %}
+        <i class="fa fa-star"></i>
+        {% else %}
+        <i class="fa fa-star-o"></i>
+        {% endif %}
+
+        {% if meal.rating > 4 %}
+        <i class="fa fa-star"></i>
+        {% else %}
+        <i class="fa fa-star-o"></i>
+        {% endif %}
+        </h4>
+    </a>
+    {% endfor %}
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><a href="#">&laquo;</a></li>
+        {% endif %}
+
+        {% for page_num in page_obj.paginator.page_range %}
+
+        {% if page_num = page_obj.number %}
+        <li class="active"><a href="#">{{ page_num }} <span class="sr-only">(current)</span></a></li>
+        {% else %}
+        <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+        {% endif %}
+
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><a href="#">&raquo;</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

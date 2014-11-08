@@ -32,3 +32,15 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+/* line 36, ../sass/project.scss */
+a.tooltip-a:hover,
+a.tooltip-a:focus {
+  color: #428BCA;
+  text-decoration: none;
+}
+
+/* line 40, ../sass/project.scss */
+a.tooltip-a:active {
+  outline: 0px none;
+}
