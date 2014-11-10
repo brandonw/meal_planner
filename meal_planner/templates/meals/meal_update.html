@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{% url 'meal-update' meal.slug %}" method="post">
+    {% csrf_token %}
+
+    {{ form }}
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+{% endblock %}

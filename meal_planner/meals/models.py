@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 
@@ -31,3 +32,6 @@ class Meal(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('meal', self.slug)

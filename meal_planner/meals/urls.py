@@ -7,13 +7,21 @@ urlpatterns = patterns('',
         views.MealsHomeView.as_view(),
         name='meals'
     ),
-    url(r'^(?P<slug>[\w-]+)/$',
+    url(r'^view/(?P<slug>[\w-]+)/$',
         views.MealView.as_view(),
         name='meal'
     ),
+    url(r'^add/$',
+        views.MealCreate.as_view(),
+        name='meal-add'
+    ),
     url(r'^edit/(?P<slug>[\w-]+)/$',
-        views.MealFormView.as_view(),
-        name='meal-form'
+        views.MealUpdate.as_view(),
+        name='meal-update'
+    ),
+    url(r'^delete/(?P<slug>[\w-]+)/$',
+        views.MealDelete.as_view(),
+        name='meal-delete'
     ),
     url(r'^tags/$',
         views.TagsHomeView.as_view(),

@@ -65,6 +65,8 @@
 <p>{{ meal.description }}</p>
 {% endif %}
 
-<a href="{% url 'meal-form' meal.slug %}" class="btn btn-default" role="button">Edit</a>
+<a href="{% url 'meal-update' meal.slug %}" class="btn btn-default" role="button">Edit</a>
+
+<a href="{% url 'meal-delete' meal.slug %}" class="btn btn-danger" role="button">Delete</a>
 
 {% endblock %}
