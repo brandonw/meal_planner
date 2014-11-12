@@ -18,7 +18,11 @@
 - name: Symlink static files to staticfiles dir
   command: python /vagrant/meal_planner/manage.py collectstatic --noinput -l -i sass
 
-- name: Add dummy Production env vars
-  lineinfile: dest=/home/vagrant/.profile line='export DJANGO_SECRET_KEY=foo'
-  lineinfile: dest=/home/vagrant/.profile line='export SENDGRID_USERNAME=foo'
-  lineinfile: dest=/home/vagrant/.profile line='export SENDGRID_PASSWORD=foo'
+- name: Add dummy DJANGO_SECRET_KEY
+  lineinfile: dest=/home/vagrant/.profile state=present insertafter=EOF line='export DJANGO_SECRET_KEY=foo'
+
+- name: Add dummy SENDGRID_USERNAME
+  lineinfile: dest=/home/vagrant/.profile state=present insertafter=EOF line='export SENDGRID_USERNAME=foo'
+
+- name: Add dummy SENDGRID_PASSWORD
+  lineinfile: dest=/home/vagrant/.profile state=present insertafter=EOF line='export SENDGRID_PASSWORD=foo'
