@@ -7,7 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from braces.views import LoginRequiredMixin
 from taggit.models import Tag
-from .models import Meal
+from meals.models import Meal
 
 class MealsHomeView(LoginRequiredMixin, ListView):
 
@@ -79,6 +79,9 @@ class MealDelete(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Meal.objects \
                 .filter(user__username=self.request.user.username)
+
+    def get_success_url(self):
+        return reverse('meals')
 
 class TagsHomeView(LoginRequiredMixin, ListView):
 
