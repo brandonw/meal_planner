@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block meals_li_class %} active{% endblock %}
 
 {% block content %}
 
-<form action="{% url 'meal-update' meal.slug %}" method="post">
-    {% csrf_token %}
+<div class="row">
+    <h3 class="col-sm-offset-2 col-sm-8">{{ meal.name }}</h4>
+</div>
 
-    {{ form }}
-
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
+{% crispy form %}
 
 {% endblock %}

@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from braces.views import LoginRequiredMixin
 from taggit.models import Tag
 from meals.models import Meal
+from meals.forms import MealHomeForm, MealCreateForm, MealUpdateForm
 
 class MealsHomeView(LoginRequiredMixin, ListView):
 
@@ -16,9 +17,26 @@ class MealsHomeView(LoginRequiredMixin, ListView):
     context_object_name = 'meals'
 
     def get_queryset(self):
-        return Meal.objects \
-                .order_by('name') \
-                .filter(user__username=self.request.user.username)
+        self.form = MealHomeForm(self.request.GET)
+        self.form.is_valid()
+        if ('sort_by' in self.form.cleaned_data and
+                self.form.cleaned_data['sort_by'] == MealHomeForm.RATING):
+            return Meal.objects \
+                    .order_by('-rating', 'name') \
+                    .filter(user__username=self.request.user.username)
+        else:
+            return Meal.objects \
+                    .order_by('name', '-rating') \
+                    .filter(user__username=self.request.user.username)
+
+    def get_context_data(self, **kwargs):
+        context = super(MealsHomeView, self).get_context_data(**kwargs)
+        context['sort_choices'] = MealHomeForm.SORT_CHOICES
+        sort_by = self.form.cleaned_data['sort_by']
+        if sort_by == '':
+            sort_by = MealHomeForm.SORT_CHOICES[0][0]
+        context['sort_by'] = sort_by
+        return context
 
 class MealView(LoginRequiredMixin, DetailView):
 
@@ -38,8 +56,7 @@ class MealView(LoginRequiredMixin, DetailView):
 class MealCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     template_name = 'meals/meal_create.html'
-    model = Meal
-    fields = ['name', 'rating', 'url', 'description', 'tags']
+    form_class = MealCreateForm
 
     def get_queryset(self):
         return Meal.objects \
@@ -58,8 +75,7 @@ class MealCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class MealUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     template_name = 'meals/meal_update.html'
-    model = Meal
-    fields = ['rating', 'url', 'description', 'tags']
+    form_class = MealUpdateForm
 
     def get_queryset(self):
         return Meal.objects \

@@ -55,7 +55,16 @@
             <li><a href="{% url 'about' %}">About</a></li>
 
             {% if request.user.is_authenticated %}
-              <li><a href="{% url 'meals' %}">Meals</a></li>
+              {% block meals_link %}
+              <li class="dropdown {% block meals_li_class %} {% endblock %}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  Meals <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{% url 'meals' %}">View all</a></li>
+                  <li><a href="{% url 'meal-add' %}">Add meal</a></li>
+                </ul>
+              </li>
+              {% endblock %}
               <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
               <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
             {% else %}

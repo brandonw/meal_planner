@@ -1,8 +1,26 @@
 {% extends "base.html" %}
+{% load meal_extras %}
+{% load crispy_forms_tags %}
+
+{% block meals_li_class %} active{% endblock %}
 
 {% block content %}
 
-<h2>Meals</h2>
+<div class="row" style="padding-bottom: 15px;">
+    <div class="col-xs-6">
+        <div class="form-control" style="border: none; box-shadow: none;">
+            <label>
+                Meals {{ page_obj.start_index }} - {{ page_obj.end_index }} of {{ page_obj.paginator.count }}
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-6 text-right">
+        Sort by:
+        {% for choice in sort_choices %}
+        <a class="btn btn-default{% if sort_by == choice.0 %} active{% endif %}" href="?sort_by={{ choice.0 }}" role="button">{{ choice.1 }}</a>
+        {% endfor %}
+    </div>
+</div>
 
 <div class="list-group">
     {% for meal in meals %}
@@ -48,7 +66,7 @@
 <nav>
     <ul class="pagination">
         {% if page_obj.has_previous %}
-        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        <li><a href="{% append_to_get page=page_obj.previous_page_number %}">&laquo;</a></li>
         {% else %}
         <li class="disabled"><a href="#">&laquo;</a></li>
         {% endif %}
@@ -58,13 +76,13 @@
         {% if page_num = page_obj.number %}
         <li class="active"><a href="#">{{ page_num }} <span class="sr-only">(current)</span></a></li>
         {% else %}
-        <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+        <li><a href="{% append_to_get page=page_num %}">{{ page_num }}</a></li>
         {% endif %}
 
         {% endfor %}
 
         {% if page_obj.has_next %}
-        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        <li><a href="{% append_to_get page=page_obj.next_page_number %}">&raquo;</a></li>
         {% else %}
         <li class="disabled"><a href="#">&raquo;</a></li>
         {% endif %}
@@ -72,7 +90,5 @@
     </ul>
 </nav>
 {% endif %}
-
-<a href="{% url 'meal-add' %}" class="btn btn-default" role="button">Add meal</a>
 
 {% endblock %}

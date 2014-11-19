@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
+{% block meals_li_class %} active{% endblock %}
+
 {% block content %}
 
 <h2>{{ meal.name }}</h2>
 
-<br />
 <h4>
 {% if meal.rating > 0 %}
 <a class="tooltip-a" title="" data-toggle="tooltip" href="#" data-original-title="{{ rating_choices.1.1 }}">
