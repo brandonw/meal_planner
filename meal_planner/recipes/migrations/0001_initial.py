@@ -16,13 +16,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Meal',
+            name='Recipe',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
                 ('slug', autoslug.fields.AutoSlugField(editable=False)),
-                ('rating', models.PositiveSmallIntegerField(default=0, choices=[(0, b'Not edible'), (1, b'Awful'), (2, b'Bad'), (3, b'Average'), (4, b'Good'), (5, b'Great')])),
+                ('rating', models.PositiveSmallIntegerField(default=0, choices=[(0, b'Not rated'), (1, b'Awful'), (2, b'Bad'), (3, b'Average'), (4, b'Good'), (5, b'Great')])),
                 ('url', models.URLField(blank=True)),
+                ('description', models.TextField(blank=True)),
                 ('tags', taggit.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', help_text='A comma-separated list of tags.', verbose_name='Tags')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],

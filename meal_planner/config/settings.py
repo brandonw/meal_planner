@@ -59,7 +59,7 @@ class Common(Configuration):
     LOCAL_APPS = (
         'users',  # custom users app
         # Your stuff: custom apps go here
-        'meals',
+        'recipes',
         'planner',
     )
 

@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     url(r'^avatar/', include('avatar.urls')),
 
     # Your stuff: custom urls go here
-    url(r'^meals/', include('meals.urls')),
+    url(r'^recipes/', include('recipes.urls')),
     url(r'^planner/', include('planner.urls')),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

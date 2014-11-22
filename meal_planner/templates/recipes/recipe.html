@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block meals_li_class %} active{% endblock %}
+{% block recipes_li_class %} active{% endblock %}
 
 {% block content %}
 
-<h2>{{ meal.name }}</h2>
+<h2>{{ recipe.name }}</h2>
 
 <h4>
-{% if meal.rating > 0 %}
+{% if recipe.rating > 0 %}
 <a class="tooltip-a" title="" data-toggle="tooltip" href="#" data-original-title="{{ rating_choices.1.1 }}">
     <i class="fa fa-star"></i>
 </a>
@@ -17,7 +17,7 @@
 </a>
 {% endif %}
 
-{% if meal.rating > 1 %}
+{% if recipe.rating > 1 %}
 <a class="tooltip-a" title="" data-toggle="tooltip" href="#" data-original-title="{{ rating_choices.2.1 }}">
     <i class="fa fa-star"></i>
 </a>
@@ -27,7 +27,7 @@
 </a>
 {% endif %}
 
-{% if meal.rating > 2 %}
+{% if recipe.rating > 2 %}
 <a class="tooltip-a" title="" data-toggle="tooltip" href="#" data-original-title="{{ rating_choices.3.1 }}">
     <i class="fa fa-star"></i>
 </a>
@@ -37,7 +37,7 @@
 </a>
 {% endif %}
 
-{% if meal.rating > 3 %}
+{% if recipe.rating > 3 %}
 <a class="tooltip-a" title="" data-toggle="tooltip" href="#" data-original-title="{{ rating_choices.4.1 }}">
     <i class="fa fa-star"></i>
 </a>
@@ -47,7 +47,7 @@
 </a>
 {% endif %}
 
-{% if meal.rating > 4 %}
+{% if recipe.rating > 4 %}
 <a class="tooltip-a" title="" data-toggle="tooltip" href="#" data-original-title="{{ rating_choices.5.1 }}">
     <i class="fa fa-star"></i>
 </a>
@@ -58,16 +58,16 @@
 {% endif %}
 </h4>
 
-{% if meal.url %}
-<p><a href="{{ meal.url }}">{{ meal.url }}</a></p>
+{% if recipe.url %}
+<p><a href="{{ recipe.url }}">{{ recipe.url }}</a></p>
 {% endif %}
 
-{% if meal.description %}
-<p>{{ meal.description }}</p>
+{% if recipe.description %}
+<p>{{ recipe.description }}</p>
 {% endif %}
 
-<a href="{% url 'meal-update' meal.slug %}" class="btn btn-default" role="button">Edit</a>
+<a href="{% url 'recipe-update' recipe.slug %}" class="btn btn-default" role="button">Edit</a>
 
-<a href="{% url 'meal-delete' meal.slug %}" class="btn btn-danger" role="button">Delete</a>
+<a href="{% url 'recipe-delete' recipe.slug %}" class="btn btn-danger" role="button">Delete</a>
 
 {% endblock %}

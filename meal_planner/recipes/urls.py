@@ -1,27 +1,27 @@
 from django.conf.urls import patterns, include, url
 
-from meals import views
+from recipes import views
 
 urlpatterns = patterns('',
     url(r'^$',
-        views.MealsHomeView.as_view(),
-        name='meals'
+        views.RecipesHomeView.as_view(),
+        name='recipes'
     ),
     url(r'^view/(?P<slug>[\w-]+)/$',
-        views.MealView.as_view(),
-        name='meal'
+        views.RecipeView.as_view(),
+        name='recipe'
     ),
     url(r'^add/$',
-        views.MealCreate.as_view(),
-        name='meal-add'
+        views.RecipeCreate.as_view(),
+        name='recipe-add'
     ),
     url(r'^edit/(?P<slug>[\w-]+)/$',
-        views.MealUpdate.as_view(),
-        name='meal-update'
+        views.RecipeUpdate.as_view(),
+        name='recipe-update'
     ),
     url(r'^delete/(?P<slug>[\w-]+)/$',
-        views.MealDelete.as_view(),
-        name='meal-delete'
+        views.RecipeDelete.as_view(),
+        name='recipe-delete'
     ),
     url(r'^tags/$',
         views.TagsHomeView.as_view(),

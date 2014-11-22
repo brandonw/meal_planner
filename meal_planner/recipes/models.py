@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 
-class Meal(models.Model):
+class Recipe(models.Model):
     NOT_RATED = 0
     AWFUL     = 1
     BAD       = 2
@@ -34,4 +34,4 @@ class Meal(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('meal', self.slug)
+        return reverse('recipe', self.slug)
