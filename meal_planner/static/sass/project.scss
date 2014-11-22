@@ -40,3 +40,55 @@ a.tooltip-a:focus {
 a.tooltip-a:active {
   outline: 0px none;
 }
+
+// site
+
+$border: #DDD;
+$today: #EEE;
+
+@media (min-width: 992px) {
+  .col-cal-1 {
+    width: 14.28541%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .first-day-of-week {
+    border-left: 1px solid $border;
+  }
+}
+
+@media (max-width: 991px) {
+  .col-cal-1 {
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 10px;
+  }
+
+  .cal-day {
+    border-left: 1px solid $border;
+  }
+}
+
+.cal-day {
+  padding-top: 5px;
+  margin-left: -15px;
+  padding-left: 15px;
+  margin-right: -15px;
+  padding-right: 15px;
+  border-right: 1px solid $border;
+  border-bottom: 1px solid $border;
+  min-height: 200px;
+}
+
+.cal-first-row .cal-day {
+  border-top: 1px solid $border;
+}
+
+.today {
+  background-color: $today;
+}

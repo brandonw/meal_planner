@@ -55,7 +55,6 @@
             <li><a href="{% url 'about' %}">About</a></li>
 
             {% if request.user.is_authenticated %}
-              {% block meals_link %}
               <li class="dropdown {% block meals_li_class %} {% endblock %}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                   Meals <span class="caret"></span></a>
@@ -63,8 +62,10 @@
                   <li><a href="{% url 'meals' %}">View all</a></li>
                   <li><a href="{% url 'meal-add' %}">Add meal</a></li>
                 </ul>
+                <li class="{% block planner_li_class %}{% endblock %}">
+                    <a href="{% url 'planner' %}">Planner</a>
+                </li>
               </li>
-              {% endblock %}
               <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
               <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
             {% else %}

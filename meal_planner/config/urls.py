@@ -30,6 +30,7 @@ urlpatterns = patterns('',
 
     # Your stuff: custom urls go here
     url(r'^meals/', include('meals.urls')),
+    url(r'^planner/', include('planner.urls')),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
