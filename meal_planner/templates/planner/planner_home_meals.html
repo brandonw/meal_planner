@@ -1,0 +1,17 @@
+<ul class="list-group">
+    {% if dayrecipes %}
+    {% with len=dayrecipes|length %}
+
+    {% for dayrecipe in dayrecipes %}
+    {% if forloop.counter0 <= 2 %}
+    <li class="list-group-item {% if dayrecipe.meal == 0 %}alert-info{% elif dayrecipe.meal == 1 %}alert-success{% elif dayrecipe.meal == 2 %}alert-danger{% endif %}">{{ dayrecipe.recipe.name }}</li>
+    {% endif %}
+    {% endfor %}
+
+    {% if len > 3 %}
+    <li id="more" class="list-group-item">and {{ len|add:"-3" }} more...</li>
+    {% endif %}
+
+    {% endwith %}
+    {% endif %}
+</ul>

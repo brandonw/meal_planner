@@ -6,92 +6,118 @@
 
 <nav>
     <ul class="pager">
-        <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Back</a></li>
-        <li>Nov 8 &mdash; Nov 21
-        <li class="next"><a href="#">Forward <span aria-hidden="true">&rarr;</span></a></li>
+        <li class="previous">
+            <a href="{% url 'planner' %}?date={{ back|date:"Y-m-d" }}">
+                <span aria-hidden="true">&larr;</span>
+                Back
+            </a>
+        </li>
+        <li class="hidden-xs">
+            <span id="cal-span">{{ visible_recipes.0.0 }} &mdash; {{ visible_recipes.6.0 }}</span>
+        </li>
+        <li class="next">
+            <a href="{% url 'planner' %}?date={{ forward|date:"Y-m-d" }}">
+                Forward
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+        </li>
     </ul>
 </nav>
 
-<div class="row cal-first-row">
+<div class="row">
     <div class="col-cal-1">
-        Sun
-        <div class="cal-day first-day-of-week">
-            Nov 8
-        </div>
+        <div class="day-heading">Sun</div>
+        <a href="#" class="cal-day first-day {% if visible_recipes.0.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.0.0 first=True only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.0.1 %}
+        </a>
     </div>
     <div class="col-cal-1">
-        Mon
-        <div class="cal-day">
-            9
-        </div>
+        <div class="day-heading">Mon</div>
+        <a href="#" class="cal-day {% if visible_recipes.1.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.1.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.1.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        Tues
-        <div class="cal-day">
-            10
-        </div>
+        <div class="day-heading">Tues</div>
+        <a href="#" class="cal-day {% if visible_recipes.2.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.2.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.2.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        Wed
-        <div class="cal-day">
-            11
-        </div>
+        <div class="day-heading">Wed</div>
+        <a href="#" class="cal-day {% if visible_recipes.3.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.3.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.3.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        Thur
-        <div class="cal-day">
-            12
-        </div>
+        <div class="day-heading">Thur</div>
+        <a href="#" class="cal-day {% if visible_recipes.4.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.4.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.4.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        Fri
-        <div class="cal-day">
-            13
-        </div>
+        <div class="day-heading">Fri</div>
+        <a href="#" class="cal-day {% if visible_recipes.5.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.5.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.5.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        Sat
-        <div class="cal-day">
-            14
-        </div>
+        <div class="day-heading">Sat</div>
+        <a href="#" class="cal-day {% if visible_recipes.6.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.6.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.6.1 only %}
+        </a>
     </div>
 </div>
 
 <div class="row hidden-xs hidden-sm">
     <div class="col-cal-1">
-        <div class="cal-day first-day-of-week">
-            15
-        </div>
+        <a href="#" href="#" class="cal-day first-day {% if visible_recipes.7.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.7.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.7.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        <div class="cal-day">
-            16
-        </div>
+        <a href="#" class="cal-day {% if visible_recipes.8.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.8.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.8.1 %}
+        </a>
     </div>
     <div class="col-cal-1">
-        <div class="cal-day">
-            17
-        </div>
+        <a href="#" class="cal-day {% if visible_recipes.9.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.9.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.9.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        <div class="cal-day">
-            18
-        </div>
+        <a href="#" class="cal-day {% if visible_recipes.10.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.10.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.10.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        <div class="cal-day">
-            Dec 19
-        </div>
+        <a href="#" class="cal-day {% if visible_recipes.11.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.11.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.11.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        <div class="cal-day">
-            20
-        </div>
+        <a href="#" class="cal-day {% if visible_recipes.12.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.12.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.12.1 only %}
+        </a>
     </div>
     <div class="col-cal-1">
-        <div class="cal-day">
-            21
-        </div>
+        <a href="#" class="cal-day {% if visible_recipes.13.0 == today %}today{% endif %}">
+            {% include "planner/planner_home_daynum.html" with day=visible_recipes.13.0 only %}
+            {% include "planner/planner_home_meals.html" with dayrecipes=visible_recipes.13.1 only %}
+        </a>
     </div>
 </div>
 
