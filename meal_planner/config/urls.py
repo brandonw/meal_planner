@@ -10,7 +10,8 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$',
         TemplateView.as_view(template_name='pages/home.html'),
         name="home"),
@@ -36,6 +37,7 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )

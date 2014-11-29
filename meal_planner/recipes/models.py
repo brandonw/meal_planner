@@ -3,13 +3,14 @@ from django.core.urlresolvers import reverse
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 
+
 class Recipe(models.Model):
     NOT_RATED = 0
-    AWFUL     = 1
-    BAD       = 2
-    AVERAGE   = 3
-    GOOD      = 4
-    GREAT     = 5
+    AWFUL = 1
+    BAD = 2
+    AVERAGE = 3
+    GOOD = 4
+    GREAT = 5
     RATING_CHOICES = (
         (NOT_RATED, 'Not rated'),
         (AWFUL, 'Awful'),

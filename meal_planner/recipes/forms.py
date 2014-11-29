@@ -2,10 +2,11 @@ from django import forms
 from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout
-from crispy_forms.bootstrap import InlineField, StrictButton
+from crispy_forms.layout import Layout
+from crispy_forms.bootstrap import StrictButton
 
 from recipes.models import Recipe
+
 
 class RecipeHomeForm(forms.Form):
 
@@ -16,8 +17,10 @@ class RecipeHomeForm(forms.Form):
         (RATING, 'Rating'),
     )
 
-    sort_by = forms.ChoiceField(choices=SORT_CHOICES,
-            label='Sort by', required=False)
+    sort_by = forms.ChoiceField(
+        choices=SORT_CHOICES,
+        label='Sort by', required=False)
+
 
 class RecipeCreateForm(forms.ModelForm):
 
@@ -38,10 +41,12 @@ class RecipeCreateForm(forms.ModelForm):
             'url',
             'description',
             'tags',
-             StrictButton('Add',
-                 css_class='col-sm-offset-2 btn btn-default', type='submit'),
+            StrictButton(
+                'Add',
+                css_class='col-sm-offset-2 btn btn-default', type='submit'),
         )
         self.helper.form_action = reverse('recipe-add')
+
 
 class RecipeUpdateForm(forms.ModelForm):
 
@@ -61,8 +66,10 @@ class RecipeUpdateForm(forms.ModelForm):
             'url',
             'description',
             'tags',
-             StrictButton('Update',
-                 css_class='col-sm-offset-2 btn btn-default', type='submit'),
+            StrictButton(
+                'Update',
+                css_class='col-sm-offset-2 btn btn-default', type='submit'),
         )
-        self.helper.form_action = reverse('recipe-update',
-                args=[self.instance.slug])
+        self.helper.form_action = reverse(
+            'recipe-update',
+            args=[self.instance.slug])

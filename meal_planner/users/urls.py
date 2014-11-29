@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 
 from users import views
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     # URL pattern for the UserListView
     url(
         regex=r'^$',
