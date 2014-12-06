@@ -7,4 +7,8 @@ urlpatterns = patterns('',
         views.PlannerHomeView.as_view(),
         name='planner'
     ),
+    url(r'^(?P<year>[\d-]+)/(?P<month>[\d-]+)/(?P<day>[\d-]+)/$',
+        views.PlannerDayView.as_view(),
+        name='planner-day'
+    ),
 )

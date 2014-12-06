@@ -1,12 +1,10 @@
-from django.core.urlresolvers import reverse
-from django.shortcuts import render
 from django.views.generic.base import TemplateView
-from django.contrib.messages.views import SuccessMessageMixin
 import datetime
 
 from braces.views import LoginRequiredMixin
-from planner.models import Day, DayRecipe
+from planner.models import DayRecipe
 from planner.forms import PlannerHomeForm
+
 
 class PlannerHomeView(LoginRequiredMixin, TemplateView):
 
@@ -17,7 +15,8 @@ class PlannerHomeView(LoginRequiredMixin, TemplateView):
 
         form = PlannerHomeForm(self.request.GET)
         form.is_valid()
-        if 'date' in form.cleaned_data and form.cleaned_data['date'] is not None:
+        if 'date' in form.cleaned_data and \
+                form.cleaned_data['date'] is not None:
             start_date = form.cleaned_data['date']
         else:
             start_date = datetime.date.today()
@@ -29,10 +28,10 @@ class PlannerHomeView(LoginRequiredMixin, TemplateView):
         end_date = start_date + datetime.timedelta(weeks=2)
 
         planned_recipes = DayRecipe.objects \
-                .filter(recipe__user__username=self.request.user.username) \
-                .filter(day__date__gte=start_date) \
-                .filter(day__date__lt=end_date) \
-                .order_by('day', 'meal')
+            .filter(recipe__user__username=self.request.user.username) \
+            .filter(day__date__gte=start_date) \
+            .filter(day__date__lt=end_date) \
+            .order_by('day', 'meal')
 
         days = [start_date + datetime.timedelta(i) for i in range(14)]
         context['visible_recipes'] = \
@@ -40,5 +39,22 @@ class PlannerHomeView(LoginRequiredMixin, TemplateView):
         context['today'] = datetime.date.today()
         context['back'] = start_date - datetime.timedelta(7)
         context['forward'] = start_date + datetime.timedelta(7)
+
+        return context
+
+
+class PlannerDayView(LoginRequiredMixin, TemplateView):
+
+    template_name = 'planner/planner_day.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PlannerDayView, self).get_context_data(**kwargs)
+
+        planned_recipes = DayRecipe.objects \
+                .filter(recipe__user__username=self.request.user.username) \
+                .filter(day__date__=start_date) \
+                .order_by('day', 'meal')
+
+        context['today'] = datetime.date.today()
 
         return context
