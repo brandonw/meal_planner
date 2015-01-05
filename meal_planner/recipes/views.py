@@ -68,6 +68,11 @@ class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.user = self.request.user
         return super(RecipeCreate, self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(RecipeCreate, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_success_url(self):
         return reverse('recipes')
 

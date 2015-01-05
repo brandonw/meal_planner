@@ -29,6 +29,7 @@ class RecipeCreateForm(forms.ModelForm):
         fields = ['name', 'rating', 'url', 'description', 'tags']
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
         super(RecipeCreateForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'recipe-create-form'
@@ -46,6 +47,16 @@ class RecipeCreateForm(forms.ModelForm):
                 css_class='col-sm-offset-2 btn btn-default', type='submit'),
         )
         self.helper.form_action = reverse('recipe-add')
+
+    def clean(self):
+        cleaned_data = super(RecipeCreateForm, self).clean()
+        name = cleaned_data.get('name')
+
+        if name and Recipe.objects \
+                .filter(user=self.user) \
+                .filter(name=name) \
+                .exists():
+            raise forms.ValidationError('%s recipe already exists.' % name)
 
 
 class RecipeUpdateForm(forms.ModelForm):

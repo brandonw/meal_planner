@@ -31,6 +31,9 @@ class Recipe(models.Model):
 
     tags = TaggableManager()
 
+    class Meta:
+        unique_together = (('user', 'name'),)
+
     def __unicode__(self):
         return self.name
 
