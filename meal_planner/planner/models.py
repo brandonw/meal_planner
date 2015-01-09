@@ -1,20 +1,25 @@
 from django.db import models
 from recipes.models import Recipe
 
+
 class Day(models.Model):
 
     date = models.DateField()
     user = models.ForeignKey('users.User')
     recipes = models.ManyToManyField('recipes.Recipe', through='DayRecipe')
 
+    class Meta:
+        unique_together = (('user', 'date'),)
+
     def __unicode__(self):
         return self.date.isoformat()
+
 
 class DayRecipe(models.Model):
 
     BREAKFAST = 0
-    LUNCH     = 1
-    DINNER    = 2
+    LUNCH = 1
+    DINNER = 2
     MEAL_CHOICES = (
         (BREAKFAST, 'Breakfast'),
         (LUNCH, 'Lunch'),

@@ -1,46 +1,23 @@
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 import datetime
 
 from braces.views import LoginRequiredMixin
 from planner.models import DayRecipe
-from planner.forms import PlannerHomeForm
+from planner.forms import RedirectToDateForm
 
 
-class PlannerHomeView(LoginRequiredMixin, TemplateView):
+class PlannerHomeView(LoginRequiredMixin, RedirectView):
 
-    template_name = 'planner/planner_home.html'
+    permanent = False
+    query_string = False
+    pattern_name = 'planner-day'
 
-    def get_context_data(self, **kwargs):
-        context = super(PlannerHomeView, self).get_context_data(**kwargs)
-
-        form = PlannerHomeForm(self.request.GET)
-        form.is_valid()
-        if 'date' in form.cleaned_data and \
-                form.cleaned_data['date'] is not None:
-            start_date = form.cleaned_data['date']
-        else:
-            start_date = datetime.date.today()
-
-        # always back up to first Sunday
-        while start_date.weekday() is not 6:
-            start_date = start_date - datetime.timedelta(1)
-
-        end_date = start_date + datetime.timedelta(weeks=2)
-
-        planned_recipes = DayRecipe.objects \
-            .filter(recipe__user__username=self.request.user.username) \
-            .filter(day__date__gte=start_date) \
-            .filter(day__date__lt=end_date) \
-            .order_by('day', 'meal')
-
-        days = [start_date + datetime.timedelta(i) for i in range(14)]
-        context['visible_recipes'] = \
-            [(day, planned_recipes.filter(day__date=day)) for day in days]
-        context['today'] = datetime.date.today()
-        context['back'] = start_date - datetime.timedelta(7)
-        context['forward'] = start_date + datetime.timedelta(7)
-
-        return context
+    def get_redirect_url(self, *args, **kwargs):
+        start_date = datetime.date.today()
+        kwargs['year'] = start_date.year
+        kwargs['month'] = start_date.month
+        kwargs['day'] = start_date.day
+        return super(PlannerHomeView, self).get_redirect_url(*args, **kwargs)
 
 
 class PlannerDayView(LoginRequiredMixin, TemplateView):
@@ -49,12 +26,79 @@ class PlannerDayView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(PlannerDayView, self).get_context_data(**kwargs)
+        year = int(kwargs['year'])
+        month = int(kwargs['month'])
+        day = int(kwargs['day'])
+        selected = datetime.date(year, month, day)
+        start = selected
+        prev_week = selected - datetime.timedelta(weeks=1)
+        next_week = selected + datetime.timedelta(weeks=1)
+        while start.weekday() is not 6:
+            start = start - datetime.timedelta(1)
+        end = selected + datetime.timedelta(weeks=1)
+        day_recipes = DayRecipe.objects \
+            .filter(recipe__user__username=self.request.user.username) \
+            .filter(day__date__gte=start) \
+            .filter(day__date__lte=end) \
+            .select_related('day', 'recipe') \
+            .order_by('day', 'meal')
 
-        planned_recipes = DayRecipe.objects \
-                .filter(recipe__user__username=self.request.user.username) \
-                .filter(day__date__=start_date) \
-                .order_by('day', 'meal')
+        # group all recipes by the day they are planned for
+        days_dict = {}
+        for day_recipe in day_recipes:
+            if day_recipe.day.date not in days_dict:
+                days_dict[day_recipe.day.date] = []
+            days_dict[day_recipe.day.date].append(day_recipe)
 
-        context['today'] = datetime.date.today()
+        days = []
+        for offset in range(8):
+            date = start + datetime.timedelta(offset)
+            days.append((date, self.get_summary(days_dict, date)))
 
+        context['days'] = days
+        context['selected'] = selected
+        context['yesterday'] = selected - datetime.timedelta(1)
+        context['tomorrow'] = selected + datetime.timedelta(1)
+        context['prev_week'] = prev_week
+        context['next_week'] = next_week
         return context
+
+    def get_summary(self, days, date):
+        if date not in days:
+            return (0, 0, 0)
+        day_recipes = days[date]
+        breakfasts = 0
+        lunches = 0
+        dinners = 0
+        for dr in day_recipes:
+            if (dr.meal == DayRecipe.BREAKFAST):
+                breakfasts += 1
+            elif (dr.meal == DayRecipe.LUNCH):
+                lunches += 1
+            elif (dr.meal == DayRecipe.DINNER):
+                dinners += 1
+
+        return (breakfasts, lunches, dinners)
+
+
+class RedirectToDateView(LoginRequiredMixin, RedirectView):
+
+    permanent = False
+    query_string = False
+    pattern_name = 'planner-day'
+
+    def get_redirect_url(self, *args, **kwargs):
+        form = RedirectToDateForm(self.request.GET)
+        if form.is_valid():
+            kwargs['year'] = form.cleaned_data['date'].year
+            kwargs['month'] = form.cleaned_data['date'].month
+            kwargs['day'] = form.cleaned_data['date'].day
+            return super(RedirectToDateView, self).get_redirect_url(
+                *args, **kwargs)
+        else:
+            start_date = datetime.date.today()
+            kwargs['year'] = start_date.year
+            kwargs['month'] = start_date.month
+            kwargs['day'] = start_date.day
+            return super(RedirectToDateView, self).get_redirect_url(
+                *args, **kwargs)

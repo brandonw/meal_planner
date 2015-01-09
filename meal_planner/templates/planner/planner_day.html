@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block planner_li_class %}active{% endblock %}
+
+{% block content %}
+
+<div class="bleed alert-info">
+    <div class="row heading visible-sm-block visible-xs-block">
+        <div class="col-xs-12">
+        <nav>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="{% url 'planner-day' yesterday.year yesterday.month yesterday.day %}">
+                        <span aria-hidden="true">&larr;</span> Yesterday
+                    </a>
+                </li>
+                <li class="next">
+                    <a href="{% url 'planner-day' tomorrow.year tomorrow.month tomorrow.day %}">
+                    Tomorrow <span aria-hidden="true">&rarr;</span></a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+    <div id="week-summary" class="row heading visible-md-block visible-lg-block">
+        <div class="col-xs-12">
+            <div class="btn-group btn-group-justified" role="group" aria-label="calendar">
+                <a class="btn btn-default" role="button" title="Previous week"
+                    href="{% url 'planner-day' prev_week.year prev_week.month prev_week.day %}">
+                    <br />
+                    <span class="glyphicon glyphicon-chevron-left"></span><br />
+                    &nbsp;
+                </a>
+
+                {% for day in days %}
+                    {% if day.0 == selected %}
+                    <a class="btn btn-primary"
+                    {% else %}
+                    <a class="btn btn-default"
+                    {% endif %}
+                    role="button"
+                    href="{% url 'planner-day' day.0.year day.0.month day.0.day %}">
+                        {% if forloop.counter = 1 or day.0.day = 1 %}
+                        {{ day.0|date:"N" }}
+                        {% endif %}
+                        <br />
+                        {{ day.0|date:"D jS" }}<br />
+                        <span title="Breakfast recipes" class="label {% if day.1.0 == 0 %}label-default{% else %}label-success{% endif %}">
+                            {{ day.1.0 }}
+                        </span>&nbsp;
+                        <span title="Lunch recipes" class="label {% if day.1.1 == 0 %}label-default{% else %}label-success{% endif %}">
+                            {{ day.1.1 }}
+                        </span>&nbsp;
+                        <span title="Dinner recipes" class="label {% if day.1.2 == 0 %}label-default{% else %}label-success{% endif %}">
+                            {{ day.1.2 }}
+                        </span>
+                    </a>
+                {% endfor %}
+
+                <a class="btn btn-default" role="button" title="Next week"
+                    href="{% url 'planner-day' next_week.year next_week.month next_week.day %}">
+                    <br />
+                    <span class="glyphicon glyphicon-chevron-right"></span><br />
+                    &nbsp;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="date-heading" class="bleed alert-success">
+    <div class="row">
+        <div class="col-xs-12">
+            <form id="pickdate" class="clearfix" type="get" action="{% url "redirect-to-date" %}">
+                <div class="input-group input-group-lg date pull-left" id="planner-date">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <input name="date" type="text"
+                        class="form-control" value="{{ selected|date:"m/d/Y" }}">
+                </div>
+                <h4 class="pull-left">{{ selected|date:"l F jS, Y" }}</h4>
+                <button type="submit" class="hidden" />
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{{ block.super }}
+<script>
+$('.input-group.date').datepicker({
+    orientation: "top left",
+    autoclose: "true",
+    todayHighlight: "true",
+    todayBtn: "linked"
+}).on('changeDate', function(e) {
+    $('form#pickdate').submit();
+});
+</script>
+
+{% endblock %}

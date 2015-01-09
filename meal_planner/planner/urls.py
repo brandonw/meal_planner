@@ -1,14 +1,19 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 from planner import views
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$',
         views.PlannerHomeView.as_view(),
         name='planner'
-    ),
+        ),
     url(r'^(?P<year>[\d-]+)/(?P<month>[\d-]+)/(?P<day>[\d-]+)/$',
         views.PlannerDayView.as_view(),
         name='planner-day'
-    ),
+        ),
+    url(r'^redirect-to-date/$',
+        views.RedirectToDateView.as_view(),
+        name='redirect-to-date'
+        ),
 )

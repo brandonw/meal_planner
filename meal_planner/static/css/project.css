@@ -1,150 +1,47 @@
-/* line 5, ../sass/project.scss */
-.alert-debug {
-  color: black;
-  background-color: white;
-  border-color: #d6e9c6;
+/* line 2, ../sass/project.scss */
+html, body {
+  overflow-x: hidden;
 }
 
-/* line 10, ../sass/project.scss */
-.alert-info {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+/* line 6, ../sass/project.scss */
+.bleed {
+  margin-left: -9999rem;
+  margin-right: -9999rem;
+  padding-left: 9999rem;
+  padding-right: 9999rem;
 }
 
-/* line 16, ../sass/project.scss */
-.alert-success {
-  color: #468847;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+/* line 13, ../sass/project.scss */
+.heading {
+  margin-top: -25px;
+}
+
+/* line 17, ../sass/project.scss */
+#week-summary {
+  padding-top: 20px;
+  padding-bottom: 15px;
 }
 
 /* line 22, ../sass/project.scss */
-.alert-warning {
-  color: black;
-  background-color: orange;
-  border-color: #d6e9c6;
+#date-heading {
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
-/* line 28, ../sass/project.scss */
-.alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+/* line 27, ../sass/project.scss */
+.date {
+  width: 250px;
+}
+
+/* line 31, ../sass/project.scss */
+#planner-date {
+  margin-right: 25px;
 }
 
 /* line 35, ../sass/project.scss */
-a.tooltip-a:hover,
-a.tooltip-a:focus {
-  color: #428BCA;
-  text-decoration: none;
-}
-
-/* line 39, ../sass/project.scss */
-a.tooltip-a:active {
-  outline: 0px none;
-}
-
-@media (min-width: 992px) {
-  /* line 51, ../sass/project.scss */
-  .col-cal-1 {
-    width: 14.28541%;
-    float: left;
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-
-  /* line 60, ../sass/project.scss */
-  .cal-day {
-    border-right: 1px solid #dddddd;
-    border-bottom: 1px solid #dddddd;
-  }
-
-  /* line 65, ../sass/project.scss */
-  .first-day {
-    border-left: 1px solid #dddddd;
-  }
-
-  /* line 69, ../sass/project.scss */
-  .day-heading {
-    border-bottom: 1px solid #dddddd;
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-@media (max-width: 991px) {
-  /* line 80, ../sass/project.scss */
-  .col-cal-1 {
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-left: 15px;
-    margin-right: 15px;
-    margin-top: 10px;
-  }
-
-  /* line 89, ../sass/project.scss */
-  .cal-day {
-    border: 1px solid #dddddd;
-  }
-}
-/* line 94, ../sass/project.scss */
-span#cal-span {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border: none;
-}
-
-/* line 102, ../sass/project.scss */
-a.cal-day:hover,
-a.cal-day:active,
-a.cal-day:focus {
-  text-decoration: none;
-  color: white;
-  background: #286090;
-}
-
-/* line 108, ../sass/project.scss */
-a.cal-day > ul.list-group > li.list-group-item {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* line 114, ../sass/project.scss */
-li.list-group-item#more {
-  color: #333;
-}
-
-/* line 120, ../sass/project.scss */
-.col-cal-1 a,
-.col-cal-1 a,
-.col-cal-1 a {
-  color: inherit;
-}
-
-/* line 124, ../sass/project.scss */
-.cal-day {
-  display: block;
-  padding-top: 5px;
-  margin-left: -15px;
-  padding-left: 15px;
-  margin-right: -15px;
-  padding-right: 15px;
-  height: 205px;
-  text-overflow: ellipsis;
-}
-
-/* line 135, ../sass/project.scss */
-.today {
-  background-color: #f0ad4e;
-}
-
-/* line 139, ../sass/project.scss */
-.cal-day > .list-group {
-  margin-top: 5px;
+button.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  left: -9999px;
 }

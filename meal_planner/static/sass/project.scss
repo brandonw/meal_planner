@@ -1,141 +1,40 @@
 // project specific CSS goes here
-
-// bootstrap alert CSS, translated to the django-standard levels of
-// debug, info, success, warning, error
-.alert-debug {
-  color: black;
-  background-color: white;
-  border-color: #d6e9c6; }
-
-.alert-info {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+html, body {
+  overflow-x: hidden;
 }
 
-.alert-success {
-  color: #468847;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
+.bleed {
+  margin-left: -9999rem;
+  margin-right: -9999rem;
+  padding-left: 9999rem;
+  padding-right: 9999rem;
 }
 
-.alert-warning {
-  color: black;
-  background-color: orange;
-  border-color: #d6e9c6;
+.heading {
+  margin-top: -25px;
 }
 
-.alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+#week-summary {
+  padding-top: 20px;
+  padding-bottom: 15px;
 }
 
-a.tooltip-a:hover,
-a.tooltip-a:focus {
-  color: #428BCA;
-  text-decoration: none;
-}
-a.tooltip-a:active {
-  outline: 0px none;
+#date-heading {
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
-// site
-
-$border: #DDD;
-$today: #F0AD4E;
-$day-hover-bg: #286090;
-$day-hover-fg: #FFF;
-
-@media (min-width: 992px) {
-  .col-cal-1 {
-    width: 14.28541%;
-    float: left;
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-
-  .cal-day {
-    border-right: 1px solid $border;
-    border-bottom: 1px solid $border;
-  }
-
-  .first-day {
-    border-left: 1px solid $border;
-  }
-
-  .day-heading {
-    border-bottom: 1px solid $border;
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
+.date {
+  width: 250px;
 }
 
-@media (max-width: 991px) {
-  .col-cal-1 {
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-left: 15px;
-    margin-right: 15px;
-    margin-top: 10px;
-  }
-
-  .cal-day {
-    border: 1px solid $border
-  }
+#planner-date {
+  margin-right: 25px;
 }
 
-span#cal-span {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border: none;
-}
-
-a.cal-day:hover,
-a.cal-day:active,
-a.cal-day:focus {
-  text-decoration: none;
-  color: $day-hover-fg;
-  background: $day-hover-bg;
-}
-
-a.cal-day > ul.list-group > li.list-group-item {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-li.list-group-item#more {
-  color: #333;
-}
-
-.col-cal-1 a,
-.col-cal-1 a,
-.col-cal-1 a {
-  color: inherit;
-}
-
-.cal-day {
-  display: block;
-  padding-top: 5px;
-  margin-left: -15px;
-  padding-left: 15px;
-  margin-right: -15px;
-  padding-right: 15px;
-  height: 205px;
-  text-overflow: ellipsis;
-}
-
-.today {
-  background-color: $today;
-}
-
-.cal-day > .list-group {
-  margin-top: 5px;
+button.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  left: -9999px;
 }
