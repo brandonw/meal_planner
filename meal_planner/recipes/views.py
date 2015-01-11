@@ -55,7 +55,7 @@ class RecipeView(LoginRequiredMixin, DetailView):
         return context
 
 
-class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class RecipeCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     template_name = 'recipes/recipe_create.html'
     form_class = RecipeCreateForm
@@ -66,10 +66,10 @@ class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(RecipeCreate, self).form_valid(form)
+        return super(RecipeCreateView, self).form_valid(form)
 
     def get_form_kwargs(self):
-        kwargs = super(RecipeCreate, self).get_form_kwargs()
+        kwargs = super(RecipeCreateView, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
 
@@ -80,7 +80,7 @@ class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return u'{0} created!'.format(self.object)
 
 
-class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     template_name = 'recipes/recipe_update.html'
     form_class = RecipeUpdateForm
@@ -96,7 +96,7 @@ class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return u'{0} updated!'.format(self.object)
 
 
-class RecipeDelete(LoginRequiredMixin, DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'recipes/recipe_delete.html'
     model = Recipe

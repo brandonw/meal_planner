@@ -1,7 +1,9 @@
+from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView, RedirectView
 import datetime
 
 from braces.views import LoginRequiredMixin
+from django.views.generic.edit import DeleteView
 from planner.models import DayRecipe
 from planner.forms import RedirectToDateForm
 
@@ -54,6 +56,8 @@ class PlannerDayView(LoginRequiredMixin, TemplateView):
         for offset in range(8):
             date = start + datetime.timedelta(offset)
             days.append((date, self.get_summary(days_dict, date)))
+            if date == selected:
+                context['todays_recipes'] = self.get_detail(days_dict, date)
 
         context['days'] = days
         context['selected'] = selected
@@ -71,12 +75,29 @@ class PlannerDayView(LoginRequiredMixin, TemplateView):
         lunches = 0
         dinners = 0
         for dr in day_recipes:
-            if (dr.meal == DayRecipe.BREAKFAST):
+            if dr.meal == DayRecipe.BREAKFAST:
                 breakfasts += 1
-            elif (dr.meal == DayRecipe.LUNCH):
+            elif dr.meal == DayRecipe.LUNCH:
                 lunches += 1
-            elif (dr.meal == DayRecipe.DINNER):
+            elif dr.meal == DayRecipe.DINNER:
                 dinners += 1
+
+        return (breakfasts, lunches, dinners)
+
+    def get_detail(self, days, date):
+        if date not in days:
+            return ([], [], [])
+        day_recipes = days[date]
+        breakfasts = []
+        lunches = []
+        dinners = []
+        for dr in day_recipes:
+            if dr.meal == DayRecipe.BREAKFAST:
+                breakfasts.append(dr)
+            elif dr.meal == DayRecipe.LUNCH:
+                lunches.append(dr)
+            elif dr.meal == DayRecipe.DINNER:
+                dinners.append(dr)
 
         return (breakfasts, lunches, dinners)
 
@@ -102,3 +123,24 @@ class RedirectToDateView(LoginRequiredMixin, RedirectView):
             kwargs['day'] = start_date.day
             return super(RedirectToDateView, self).get_redirect_url(
                 *args, **kwargs)
+
+
+class DayRecipeDelete(LoginRequiredMixin, DeleteView):
+
+    def get_queryset(self):
+        return DayRecipe.objects \
+            .filter(day__user__username=self.request.user.username)
+
+    def get_object(self, queryset=None):
+        dayrecipe = super(DayRecipeDelete, self).get_object(queryset)
+        self.date = dayrecipe.day.date
+        return dayrecipe
+
+    def get_success_url(self):
+        return reverse(
+            'planner-day',
+            kwargs={
+                'year': self.date.year,
+                'month': self.date.month,
+                'day': self.date.day
+                })

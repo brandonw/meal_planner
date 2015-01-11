@@ -8,12 +8,16 @@ urlpatterns = patterns(
         views.PlannerHomeView.as_view(),
         name='planner'
         ),
-    url(r'^(?P<year>[\d-]+)/(?P<month>[\d-]+)/(?P<day>[\d-]+)/$',
+    url(r'^(?P<year>[\d]+)/(?P<month>[\d]+)/(?P<day>[\d]+)/$',
         views.PlannerDayView.as_view(),
         name='planner-day'
         ),
     url(r'^redirect-to-date/$',
         views.RedirectToDateView.as_view(),
         name='redirect-to-date'
+        ),
+    url(r'^delete/(?P<pk>[\d]+)/$',
+        views.DayRecipeDelete.as_view(),
+        name='delete-dayrecipe'
         ),
 )

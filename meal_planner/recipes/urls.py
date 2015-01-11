@@ -13,15 +13,15 @@ urlpatterns = patterns(
         name='recipe'
         ),
     url(r'^add/$',
-        views.RecipeCreate.as_view(),
+        views.RecipeCreateView.as_view(),
         name='recipe-add'
         ),
     url(r'^edit/(?P<slug>[\w-]+)/$',
-        views.RecipeUpdate.as_view(),
+        views.RecipeUpdateView.as_view(),
         name='recipe-update'
         ),
     url(r'^delete/(?P<slug>[\w-]+)/$',
-        views.RecipeDelete.as_view(),
+        views.RecipeDeleteView.as_view(),
         name='recipe-delete'
         ),
     url(r'^tags/$',

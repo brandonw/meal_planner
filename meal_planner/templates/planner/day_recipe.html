@@ -1,0 +1,18 @@
+<li class="list-group-item">
+    <div class="clearfix">
+        <h4 class="pull-left">{{ dayrecipe.recipe.name }}</h4>
+        <form class="pull-right"
+              method="post" action="{% url "delete-dayrecipe" dayrecipe.id %}">
+            {% csrf_token %}
+            <button title="Remove" type="submit" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </form>
+    </div>
+    {% if dayrecipe.recipe.url %}
+    <a href="{{ dayrecipe.url }}">{{ dayrecipe.url }}</a>
+    {% endif %}
+    {% if dayrecipe.recipe.description %}
+    <p>{{ dayrecipe.recipe.description }}</p>
+    {% endif %}
+</li>

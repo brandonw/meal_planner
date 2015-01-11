@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<div id="date-heading" class="bleed alert-success">
+<div class="bleed vertical-padding alert-success">
     <div class="row">
         <div class="col-xs-12">
             <form id="pickdate" class="clearfix" type="get" action="{% url "redirect-to-date" %}">
@@ -83,6 +83,45 @@
                 <button type="submit" class="hidden" />
             </form>
         </div>
+    </div>
+</div>
+
+<div id="breakfast-row" class="row">
+    <div class="col-md-3">
+        <h3>Breakfast <small>{{ todays_recipes.0|length }} recipes</small></h3>
+    </div>
+    <div class="col-md-9 meal">
+        <ul class="list-group">
+        {% for dr in todays_recipes.0 %}
+        {% include "planner/day_recipe.html" with dayrecipe=dr %}
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Lunch <small>{{ todays_recipes.1|length }} recipes</small></h3>
+    </div>
+    <div class="col-md-9 meal">
+        <ul class="list-group">
+        {% for dr in todays_recipes.1 %}
+        {% include "planner/day_recipe.html" with dayrecipe=dr %}
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Dinner <small>{{ todays_recipes.2|length }} recipes</small></h3>
+    </div>
+    <div class="col-md-9 meal">
+        <ul class="list-group">
+        {% for dr in todays_recipes.2 %}
+        {% include "planner/day_recipe.html" with dayrecipe=dr %}
+        {% endfor %}
+        </ul>
     </div>
 </div>
 

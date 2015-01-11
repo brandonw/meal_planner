@@ -23,22 +23,32 @@ html, body {
 }
 
 /* line 22, ../sass/project.scss */
-#date-heading {
+#breakfast-row {
+  padding-top: 10px;
+}
+
+/* line 26, ../sass/project.scss */
+.meal {
+  padding-top: 5px;
+}
+
+/* line 30, ../sass/project.scss */
+.vertical-padding {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-/* line 27, ../sass/project.scss */
+/* line 35, ../sass/project.scss */
 .date {
   width: 250px;
 }
 
-/* line 31, ../sass/project.scss */
+/* line 39, ../sass/project.scss */
 #planner-date {
   margin-right: 25px;
 }
 
-/* line 35, ../sass/project.scss */
+/* line 43, ../sass/project.scss */
 button.hidden {
   position: absolute;
   width: 1px;
