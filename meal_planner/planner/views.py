@@ -43,7 +43,7 @@ class PlannerDayView(LoginRequiredMixin, TemplateView):
             .filter(day__date__gte=start) \
             .filter(day__date__lte=end) \
             .select_related('day', 'recipe') \
-            .order_by('day', 'meal')
+            .order_by('day', 'meal', 'pk')
 
         # group all recipes by the day they are planned for
         days_dict = {}
