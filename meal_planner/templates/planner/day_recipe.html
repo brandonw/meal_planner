@@ -2,6 +2,7 @@
     <div class="clearfix">
         <h4 class="pull-left">{{ dayrecipe.recipe.name }}</h4>
         <form id="dayrecipe-delete" class="pull-right"
+              onsubmit="return removeDayRecipe(event);"
               method="post" action="{% url "delete-dayrecipe" dayrecipe.id %}">
             {% csrf_token %}
             <button title="Remove" type="submit" class="btn btn-danger">
