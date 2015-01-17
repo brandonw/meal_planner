@@ -1,10 +1,41 @@
 <li class="list-group-item">
     <div class="clearfix">
-        <h4 class="pull-left">
-            <a href="{% url 'recipe' dayrecipe.recipe.slug %}">
-                {{ dayrecipe.recipe.name }}
-            </a>
-        </h4>
+        <div class="pull-left">
+            <span class="h4">
+                <a href="{% url 'recipe' dayrecipe.recipe.slug %}">
+                    {{ dayrecipe.recipe.name }}
+                </a>
+            </span>
+        </div>
+        <div class="pull-left">
+            <ul id="dayrecipe-rating" class="rating star{{ dayrecipe.recipe.rating }}">
+                <li class="one">
+                    <a href="{% url 'recipe-update-rating' dayrecipe.recipe.slug 1 %}?date={{ selected|date:"n/j/Y" }}"
+                       title="1 Star">1
+                    </a>
+                </li>
+                <li class="two">
+                    <a href="{% url 'recipe-update-rating' dayrecipe.recipe.slug 2 %}?date={{ selected|date:"n/j/Y" }}"
+                       title="2 Star">2
+                    </a>
+                </li>
+                <li class="three">
+                    <a href="{% url 'recipe-update-rating' dayrecipe.recipe.slug 3 %}?date={{ selected|date:"n/j/Y" }}"
+                       title="3 Star">3
+                    </a>
+                </li>
+                <li class="four">
+                    <a href="{% url 'recipe-update-rating' dayrecipe.recipe.slug 4 %}?date={{ selected|date:"n/j/Y" }}"
+                       title="4 Star">4
+                    </a>
+                </li>
+                <li class="five">
+                    <a href="{% url 'recipe-update-rating' dayrecipe.recipe.slug 5 %}?date={{ selected|date:"n/j/Y" }}"
+                       title="5 Star">5
+                    </a>
+                </li>
+            </ul>
+        </div>
         <form id="dayrecipe-delete" class="pull-right"
               onsubmit="return removeDayRecipe(event);"
               method="post" action="{% url "delete-dayrecipe" dayrecipe.id %}">
@@ -15,7 +46,7 @@
         </form>
     </div>
     {% if dayrecipe.recipe.url %}
-    <a href="{{ dayrecipe.url }}">{{ dayrecipe.url }}</a>
+    <p><a href="{{ dayrecipe.url }}">{{ dayrecipe.url }}</a></p>
     {% endif %}
     {% if dayrecipe.recipe.description %}
     <p>{{ dayrecipe.recipe.description }}</p>

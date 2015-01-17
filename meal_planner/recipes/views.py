@@ -1,13 +1,18 @@
 from django.core.urlresolvers import reverse
+from django.db.models import Q
+from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
+import datetime
 
 from braces.views import LoginRequiredMixin
 from taggit.models import Tag
 from recipes.models import Recipe
-from recipes.forms import RecipeHomeForm, RecipeCreateForm, RecipeUpdateForm
+from recipes.forms import RecipeHomeForm, RecipeCreateForm, \
+    RecipeUpdateForm, RecipeUpdateRatingForm
+from planner.forms import RedirectToDateForm
 
 
 class RecipesHomeView(LoginRequiredMixin, ListView):
@@ -96,6 +101,37 @@ class RecipeUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return u'{0} updated!'.format(self.object)
 
 
+class RecipeUpdateRatingView(LoginRequiredMixin, RedirectView):
+    permanent = False
+    query_string = False
+    pattern_name = 'planner-day'
+
+    def get_redirect_url(self, *args, **kwargs):
+        form = RecipeUpdateRatingForm(kwargs)
+        if form.is_valid():
+            recipe = Recipe.objects.get(
+                Q(user__username=self.request.user.username),
+                Q(slug=kwargs['slug']))
+            recipe.rating = form.cleaned_data['rating']
+            recipe.save()
+
+        form = RedirectToDateForm(self.request.GET)
+        date = datetime.date.today()
+        if form.is_valid():
+            date = form.cleaned_data['date']
+
+        # make sure to pop the update kwargs so they do not interfere
+        # with the url pattern reversal
+        kwargs.pop('slug')
+        kwargs.pop('rating')
+
+        kwargs['year'] = date.year
+        kwargs['month'] = date.month
+        kwargs['day'] = date.day
+        return super(RecipeUpdateRatingView, self).get_redirect_url(
+            *args, **kwargs)
+
+
 class RecipeDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'recipes/recipe_delete.html'
@@ -117,4 +153,3 @@ class TagsHomeView(LoginRequiredMixin, ListView):
 class TagView(LoginRequiredMixin, ListView):
 
     model = Recipe
-

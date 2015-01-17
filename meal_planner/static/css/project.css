@@ -55,3 +55,134 @@ button.hidden {
   height: 1px;
   left: -9999px;
 }
+
+/* line 50, ../sass/project.scss */
+#dayrecipe-rating {
+  margin-left: 10px;
+}
+
+/* star-rate component */
+/* the default rating is placed as a background image in the ul */
+/* use the background position according to the table above to display the required images*/
+/* line 57, ../sass/project.scss */
+.rating {
+  width: 80px;
+  height: 16px;
+  margin: 0 0 20px 0;
+  padding: 0;
+  list-style: none;
+  clear: both;
+  position: relative;
+  background: url("/static/images/star-matrix.gif") no-repeat 0 0;
+}
+
+/* add these classes to the ul to effect the change to the correct number of stars */
+/* line 68, ../sass/project.scss */
+.star0 {
+  background-position: 0 0;
+}
+
+/* line 69, ../sass/project.scss */
+.star1 {
+  background-position: 0 -16px;
+}
+
+/* line 70, ../sass/project.scss */
+.star2 {
+  background-position: 0 -32px;
+}
+
+/* line 71, ../sass/project.scss */
+.star3 {
+  background-position: 0 -48px;
+}
+
+/* line 72, ../sass/project.scss */
+.star4 {
+  background-position: 0 -64px;
+}
+
+/* line 73, ../sass/project.scss */
+.star5 {
+  background-position: 0 -80px;
+}
+
+/* line 74, ../sass/project.scss */
+ul.rating li {
+  cursor: pointer;
+  /*ie5 mac doesn't like it if the list is floated\*/
+  float: left;
+  /* end hide*/
+  text-indent: -999em;
+}
+
+/* line 81, ../sass/project.scss */
+ul.rating li a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  text-decoration: none;
+  z-index: 200;
+}
+
+/* line 90, ../sass/project.scss */
+ul.rating li.one a {
+  left: 0;
+}
+
+/* line 91, ../sass/project.scss */
+ul.rating li.two a {
+  left: 16px;
+}
+
+/* line 92, ../sass/project.scss */
+ul.rating li.three a {
+  left: 32px;
+}
+
+/* line 93, ../sass/project.scss */
+ul.rating li.four a {
+  left: 48px;
+}
+
+/* line 94, ../sass/project.scss */
+ul.rating li.five a {
+  left: 64px;
+}
+
+/* line 95, ../sass/project.scss */
+ul.rating li a:hover {
+  z-index: 2;
+  width: 80px;
+  height: 16px;
+  overflow: hidden;
+  left: 0;
+  background: url("/static/images/star-matrix.gif") no-repeat 0 0;
+}
+
+/* line 103, ../sass/project.scss */
+ul.rating li.one a:hover {
+  background-position: 0 -96px;
+}
+
+/* line 104, ../sass/project.scss */
+ul.rating li.two a:hover {
+  background-position: 0 -112px;
+}
+
+/* line 105, ../sass/project.scss */
+ul.rating li.three a:hover {
+  background-position: 0 -128px;
+}
+
+/* line 106, ../sass/project.scss */
+ul.rating li.four a:hover {
+  background-position: 0 -144px;
+}
+
+/* line 107, ../sass/project.scss */
+ul.rating li.five a:hover {
+  background-position: 0 -160px;
+}

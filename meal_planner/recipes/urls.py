@@ -20,6 +20,10 @@ urlpatterns = patterns(
         views.RecipeUpdateView.as_view(),
         name='recipe-update'
         ),
+    url(r'^rate/(?P<slug>[\w-]+)/(?P<rating>[0-5])/$',
+        views.RecipeUpdateRatingView.as_view(),
+        name='recipe-update-rating'
+        ),
     url(r'^delete/(?P<slug>[\w-]+)/$',
         views.RecipeDeleteView.as_view(),
         name='recipe-delete'

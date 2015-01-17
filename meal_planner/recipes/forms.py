@@ -84,3 +84,9 @@ class RecipeUpdateForm(forms.ModelForm):
         self.helper.form_action = reverse(
             'recipe-update',
             args=[self.instance.slug])
+
+
+class RecipeUpdateRatingForm(forms.ModelForm):
+    class Meta:
+        model = Recipe
+        fields = ['rating']
