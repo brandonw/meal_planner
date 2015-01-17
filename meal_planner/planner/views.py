@@ -110,19 +110,15 @@ class RedirectToDateView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         form = RedirectToDateForm(self.request.GET)
+        date = datetime.date.today()
         if form.is_valid():
-            kwargs['year'] = form.cleaned_data['date'].year
-            kwargs['month'] = form.cleaned_data['date'].month
-            kwargs['day'] = form.cleaned_data['date'].day
-            return super(RedirectToDateView, self).get_redirect_url(
-                *args, **kwargs)
-        else:
-            start_date = datetime.date.today()
-            kwargs['year'] = start_date.year
-            kwargs['month'] = start_date.month
-            kwargs['day'] = start_date.day
-            return super(RedirectToDateView, self).get_redirect_url(
-                *args, **kwargs)
+            date = form.cleaned_data['date']
+
+        kwargs['year'] = date.year
+        kwargs['month'] = date.month
+        kwargs['day'] = date.day
+        return super(RedirectToDateView, self).get_redirect_url(
+            *args, **kwargs)
 
 
 class DayRecipeDelete(LoginRequiredMixin, DeleteView):
