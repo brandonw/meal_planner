@@ -53,6 +53,7 @@ class Common(Configuration):
         'crispy_forms',  # Form layouts
         'avatar',  # for user avatars
         'taggit',  # allows use of tag manager
+        'rest_framework',  # api support
     )
 
     # Apps specific for this project go here.
@@ -274,6 +275,15 @@ class Common(Configuration):
 
 
     ########## Your common stuff: Below this line define 3rd party libary settings
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.SessionAuthentication',
+        ),
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticated',
+        ),
+        'PAGINATE_BY': 10
+    }
 
 
 class Local(Common):

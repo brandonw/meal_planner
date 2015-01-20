@@ -6,12 +6,14 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 import datetime
+from rest_framework import viewsets
 
 from braces.views import LoginRequiredMixin
 from taggit.models import Tag
 from recipes.models import Recipe
 from recipes.forms import RecipeHomeForm, RecipeCreateForm, \
     RecipeUpdateForm, RecipeUpdateRatingForm
+from recipes.serializers import RecipeSerializer
 from planner.forms import RedirectToDateForm
 
 
@@ -153,3 +155,12 @@ class TagsHomeView(LoginRequiredMixin, ListView):
 class TagView(LoginRequiredMixin, ListView):
 
     model = Recipe
+
+
+class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
+    model = Recipe
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        return Recipe.objects \
+            .filter(user__username=self.request.user.username)
