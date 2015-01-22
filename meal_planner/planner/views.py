@@ -121,14 +121,14 @@ class RedirectToDateView(LoginRequiredMixin, RedirectView):
             *args, **kwargs)
 
 
-class DayRecipeDelete(LoginRequiredMixin, DeleteView):
+class DayRecipeDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return DayRecipe.objects \
             .filter(day__user__username=self.request.user.username)
 
     def get_object(self, queryset=None):
-        dayrecipe = super(DayRecipeDelete, self).get_object(queryset)
+        dayrecipe = super(DayRecipeDeleteView, self).get_object(queryset)
         self.date = dayrecipe.day.date
         return dayrecipe
 

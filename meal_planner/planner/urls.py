@@ -17,7 +17,7 @@ urlpatterns = patterns(
         name='redirect-to-date'
         ),
     url(r'^delete/(?P<pk>[\d]+)/$',
-        views.DayRecipeDelete.as_view(),
+        views.DayRecipeDeleteView.as_view(),
         name='delete-dayrecipe'
         ),
 )
