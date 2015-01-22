@@ -1,11 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView, RedirectView
+from django.views.generic.edit import CreateView
 import datetime
 
 from braces.views import LoginRequiredMixin
 from django.views.generic.edit import DeleteView
-from planner.models import DayRecipe
-from planner.forms import RedirectToDateForm
+from planner.models import DayRecipe, Day
+from planner.forms import RedirectToDateForm, DayRecipeCreateForm
 
 
 class PlannerHomeView(LoginRequiredMixin, RedirectView):
@@ -65,6 +66,9 @@ class PlannerDayView(LoginRequiredMixin, TemplateView):
         context['tomorrow'] = selected + datetime.timedelta(1)
         context['prev_week'] = prev_week
         context['next_week'] = next_week
+        context['breakfastid'] = DayRecipe.BREAKFAST
+        context['lunchid'] = DayRecipe.LUNCH
+        context['dinnerid'] = DayRecipe.DINNER
         return context
 
     def get_summary(self, days, date):
@@ -140,3 +144,53 @@ class DayRecipeDeleteView(LoginRequiredMixin, DeleteView):
                 'month': self.date.month,
                 'day': self.date.day
                 })
+
+
+class DayRecipeCreateView(LoginRequiredMixin, CreateView):
+
+    template_name = 'planner/dayrecipe_create.html'
+    form_class = DayRecipeCreateForm
+    model = DayRecipe
+
+    def get_success_url(self):
+        return reverse(
+            'planner-day',
+            kwargs={'year': self.kwargs['year'],
+                    'month': self.kwargs['month'],
+                    'day': self.kwargs['day']})
+
+    def form_valid(self, form):
+        form.instance.meal = self.kwargs['meal']
+        days = Day.objects \
+            .filter(user__username=self.request.user) \
+            .filter(date=datetime.date(
+                int(self.kwargs['year']),
+                int(self.kwargs['month']),
+                int(self.kwargs['day'])))
+        if days.count() > 0:
+            form.instance.day = days[0]
+        else:
+            day = Day(date=datetime.date.today, user=self.request.user)
+            day.save()
+            form.instance.day = day
+        return super(DayRecipeCreateView, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(DayRecipeCreateView, self).get_form_kwargs()
+        kwargs['date'] = datetime.date(
+            int(self.kwargs['year']),
+            int(self.kwargs['month']),
+            int(self.kwargs['day']))
+        kwargs['meal'] = self.kwargs['meal']
+        kwargs['user'] = self.request.user.username
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(DayRecipeCreateView, self).get_context_data(**kwargs)
+        context['date'] = datetime.date(
+            int(self.kwargs['year']),
+            int(self.kwargs['month']),
+            int(self.kwargs['day']))
+        mealname = DayRecipe.MEAL_CHOICES[int(self.kwargs['meal'])][1]
+        context['mealname'] = mealname
+        return context

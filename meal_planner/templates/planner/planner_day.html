@@ -89,6 +89,10 @@
 <div id="breakfast-row" class="row">
     <div class="col-md-3">
         <h3>Breakfast <small>{{ todays_recipes.0|length }} recipes</small></h3>
+        <noscript>
+            <a class="btn btn-default"
+               href="{% url "create-dayrecipe" selected.year selected.month selected.day breakfastid %}">Add</a>
+        </noscript>
     </div>
     <div class="col-md-9 meal">
         <ul class="list-group">
@@ -102,6 +106,10 @@
 <div class="row">
     <div class="col-md-3">
         <h3>Lunch <small>{{ todays_recipes.1|length }} recipes</small></h3>
+        <noscript>
+            <a class="btn btn-default"
+               href="{% url "create-dayrecipe" selected.year selected.month selected.day lunchid %}">Add</a>
+        </noscript>
     </div>
     <div class="col-md-9 meal">
         <ul class="list-group">
@@ -115,6 +123,10 @@
 <div class="row">
     <div class="col-md-3">
         <h3>Dinner <small>{{ todays_recipes.2|length }} recipes</small></h3>
+        <noscript>
+            <a class="btn btn-default"
+               href="{% url "create-dayrecipe" selected.year selected.month selected.day dinnerid %}">Add</a>
+        </noscript>
     </div>
     <div class="col-md-9 meal">
         <ul class="list-group">

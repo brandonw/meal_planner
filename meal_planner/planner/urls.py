@@ -20,4 +20,9 @@ urlpatterns = patterns(
         views.DayRecipeDeleteView.as_view(),
         name='delete-dayrecipe'
         ),
+    url(r'^(?P<year>[\d]+)/(?P<month>[\d]+)/' +
+        '(?P<day>[\d]+)/add/(?P<meal>[\d])/$',
+        views.DayRecipeCreateView.as_view(),
+        name='create-dayrecipe'
+        ),
 )

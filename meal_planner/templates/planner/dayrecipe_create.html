@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block recipes_li_class %} active{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <h3 class="col-sm-offset-2 col-sm-8">Add {{ mealname|lower }} recipe to {{ date|date }}</h4>
+</div>
+
+{% crispy form %}
+
+{% endblock %}
